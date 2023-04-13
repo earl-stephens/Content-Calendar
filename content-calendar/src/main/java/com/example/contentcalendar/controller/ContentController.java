@@ -3,20 +3,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.contentcalendar.model.Content;
-import com.example.contentcalendar.repository.ContentCollectionRepository;
+import com.example.contentcalendar.repository.ContentRepository;
 
 import jakarta.validation.Valid;
 
@@ -25,10 +16,10 @@ import jakarta.validation.Valid;
 @CrossOrigin
 public class ContentController {
 	
-	private final ContentCollectionRepository repository;
+	private final ContentRepository repository;
 	
 	@Autowired
-	public ContentController(ContentCollectionRepository repository) {
+	public ContentController(ContentRepository repository) {
 		this.repository = repository;
 	}
 	
@@ -60,6 +51,6 @@ public class ContentController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable int id) {
-		repository.delete(id);
+		repository.deleteById(id);
 	}
 }
