@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.contentcalendar.model.Content;
-import com.example.contentcalendar.repository.ContentCollectionRepository;
+import com.example.contentcalendar.repository.ContentRepository;
 
 import jakarta.validation.Valid;
 
@@ -25,10 +25,10 @@ import jakarta.validation.Valid;
 @CrossOrigin
 public class ContentController {
 	
-	private final ContentCollectionRepository repository;
+	private final ContentRepository repository;
 	
 	@Autowired
-	public ContentController(ContentCollectionRepository repository) {
+	public ContentController(ContentRepository repository) {
 		this.repository = repository;
 	}
 	
@@ -60,6 +60,11 @@ public class ContentController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable int id) {
-		repository.delete(id);
+		repository.deleteById(id);
+	}
+	
+	@GetMapping("/filter/type/{type}")
+	public List<Content> filterByType(@PathVariable String type) {
+		return repository.findAllByContentType(type.toUpperCase());
 	}
 }
